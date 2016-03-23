@@ -1,3 +1,5 @@
+I forked this from [MaazAli/ember-cli-sortable](https://github.com/MaazAli/ember-cli-sortable) and made some changes because it cannot work well with ember. And I decided to publish this by myself since auther haven't updated his repository for very long time and do not answer any merge requests.
+
 # ember-cli-sortable
 
 This is an ember-cli addon that integrates [RubaXa's Sortable](https://github.com/RubaXa/Sortable) plugin with Ember.
