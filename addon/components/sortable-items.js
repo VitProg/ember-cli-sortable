@@ -10,7 +10,7 @@ var pid,
 var SortableItems = Ember.Component.extend({
   target: Ember.computed.alias('targetObject'), // Bubble up all actions
   layout: layout,
-  tagName: "div",
+  tagName: 'div',
   classNames: ['sortable-items'],
   classNameBindings: ['class'],
 
@@ -105,18 +105,19 @@ var SortableItems = Ember.Component.extend({
       onMove: Ember.run.bind(this, this._onMove)
     };
 
-    var instance = new Sortable(this.$()[0], options);
     var self = this;
-
-    this.set('_itemCollection', this.get('itemCollection').map(function(item, i) {
-      return {
-        item: item,
-        id: i
-      };
-    }));
-    this.set('_itemCollectionSorted', this.get('itemCollection').slice());
-    this.set('_sortableInstance', instance);
-    this.collectionUpdated();
+    Ember.run.scheduleOnce('afterRender', function() {
+      var instance = new Sortable(self.$()[0], options);
+      self.set('_itemCollection', self.get('itemCollection').map(function(item, i) {
+        return {
+          item: item,
+          id: i
+        };
+      }));
+      this.set('_itemCollectionSorted', self.get('itemCollection').slice());
+      this.set('_sortableInstance', instance);
+      this.collectionUpdated();
+    });
   }),
 
 
