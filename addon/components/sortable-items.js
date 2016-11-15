@@ -38,18 +38,7 @@ const SortableItems = Ember.Component.extend({
   scrollSensitivity: 30, // px
   scrollSpeed: 10, // px
 
-  collectionUpdated() {
-    Ember.run.scheduleOnce('afterRender', () => {
-      var collection = this.get('itemCollection');
-      Array.prototype.forEach.call(this.get('_sortableInstance.el.children'), function(item, i) {
-        if (item.dataset) {
-          item.dataset['item'] = collection.objectAt(i);
-          item.dataset['id'] = i;
-        }
-      });
-    });
-  },
-  itemCollectionObserver: Ember.observer('itemCollection', 'itemCollection.[]', function() {
+  itemCollectionObserver: Ember.on('didInsertElement', Ember.observer('itemCollection', 'itemCollection.[]', function() {
     var collection = this.get('itemCollection');
     var sortedCollection = this.get('_itemCollectionSorted');
     if (JSON.stringify(collection.toArray()) !== JSON.stringify(sortedCollection.getEach('item').toArray())) {
@@ -67,10 +56,7 @@ const SortableItems = Ember.Component.extend({
         Ember.set(item, 'id', newOrder.indexOf(oldId));
       });
     }
-  }),
-  _itemCollectionObserver: Ember.observer('_itemCollection.[]', function() {
-    this.collectionUpdated();
-  }),
+  })),
 
   /**
    @method setup
@@ -105,18 +91,8 @@ const SortableItems = Ember.Component.extend({
       onMove: Ember.run.bind(this, this._onMove)
     };
 
-    Ember.run.scheduleOnce('afterRender', ()=> {
-      const instance = new Sortable(this.$()[0], options);
-      this.set('_itemCollection', this.get('itemCollection').map(function(item, i) {
-        return {
-          item: item,
-          id: i
-        };
-      }));
-      this.set('_itemCollectionSorted', this.get('itemCollection').slice());
-      this.set('_sortableInstance', instance);
-      this.collectionUpdated();
-    });
+    const instance = new Sortable(this.$()[0], options);
+    this.set('_sortableInstance', instance);
   }),
 
 

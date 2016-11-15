@@ -1,5 +1,7 @@
 {{#each _itemCollection as |item|}}
-  {{yield item.item item.id}}
+  {{#if item.item}}
+    <li class="item" data-item={{item.item}} data-id={{item.id}}>{{yield item.item item.id}}</li>
+  {{/if}}
 {{else}}
   {{{noItemText}}}
 {{/each}}
