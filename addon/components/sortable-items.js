@@ -91,7 +91,7 @@ const SortableItems = Ember.Component.extend({
       onMove: Ember.run.bind(this, this._onMove)
     };
 
-    const instance = new Sortable(this.$()[0], options);
+    const instance = new Sortable(this.element, options);
     this.set('_sortableInstance', instance);
   }),
 
@@ -151,13 +151,13 @@ const SortableItems = Ember.Component.extend({
   _onUpdate(evt) {
     this._sendOutAction('onUpdateAction', evt);
     const items = [];
-    const sortedCollection = Array.prototype.map.call(this.$().children(), function(item, i) {
+    const sortedCollection = Array.prototype.map.call(this.element.children, function(item, i) {
       const sortedItem = {
-        item: item.dataset.item,
-        id: item.dataset.id
+        item: item.getAttribute('data-item'),
+        id: item.getAttribute('data-id'),
       };
-      item.dataset.id = i;
-      items.pushObject(item.dataset.item);
+      item.setAttribute('data-id', i);
+      items.pushObject(item.setAttribute('data-item'));
       return sortedItem;
     });
     this.set('_itemCollectionSorted', sortedCollection);

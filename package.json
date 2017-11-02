@@ -19,9 +19,11 @@
     "node": ">= 0.10.0"
   },
   "author": "Maaz Ali",
-  "contributors": {
-    "name": "RubaXa"
-  },
+  "contributors": [
+    "RubaXa",
+    "JennieJi",
+    "VitProg"
+  ],
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.4",
@@ -49,8 +51,9 @@
     "rubaxa-sortable"
   ],
   "dependencies": {
-    "ember-cli-htmlbars": "1.0.8",
-    "ember-cli-babel": "^5.1.6"
+    "bower": "^1.8.2",
+    "ember-cli-babel": "^5.1.6",
+    "ember-cli-htmlbars": "1.0.8"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
